@@ -1,42 +1,42 @@
-﻿using System;
+using System;
+using System.Diagnostics.Metrics;
+using System.Reflection;
 
 class Program
 {
-    static void Main()
+  static void Main()
+  {
+      try
+      {
+          Console.Write(" degree base = ");
+          int variable = Convert.ToInt32(Console.ReadLine());
+
+          Console.Write(" base exponent = ");
+          int number = Convert.ToInt32(Console.ReadLine());
+
+          if (variable <= 0 || number <= 0)
+              throw new ArgumentException("The numbers must be positive");
+
+          long result = PowerByMultiplication(variable, number);
+          Console.WriteLine($"Result {variable}^{number}: {result}");
+      }
+      catch (Exception ex)
+      {
+          Console.WriteLine("error: " + ex.Message);
+      }
+      finally
+      {
+          Console.WriteLine("\nPress any key to exit...");
+          Console.ReadKey();
+      }
+  }
+    private static long PowerByMultiplication(int baseNumber, int exponent)
     {
-        try
+        long result = 1L;
+        for (int counter = 0; counter < exponent; ++counter)
         {
-            Console.Write(" degree base = ");
-            int a = Convert.ToInt32(Console.ReadLine());
-
-            Console.Write(" base exponent = ");
-            int n = Convert.ToInt32(Console.ReadLine());
-
-            if (a <= 0 || n <= 0)
-                throw new ArgumentException("Числа должны быть положительными!");
-
-            long result = PowerByMultiplication(a, n);
-            Console.WriteLine($"Результат {a}^{n}: {result}");
+            result *= baseNumber;
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Ошибка: " + ex.Message);
-        }
-        finally
-        {
-            Console.WriteLine("\nНажмите любую клавишу для выхода...");
-            Console.ReadKey();
-        }
-    }
-
-    // Функция возведения в степень путем последовательного умножения
-    private static long PowerByMultiplication(int baseNum, int exponent)
-    {
-        long res = 1L;
-        for (int i = 0; i < exponent; ++i)
-        {
-            res *= baseNum;
-        }
-        return res;
+        return result;
     }
 }
